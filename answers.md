@@ -438,4 +438,366 @@ X_train_balanced, y_train_balanced = smote.fit_resample(X_train, y_train)
 **A101:** P(at least 2 heads in 3 flips) = P(exactly 2) + P(exactly 3)
 P(exactly 2) = C(3,2) × (0.5)² × (0.5)¹ = 3 × 0.125 = 0.375
 P(exactly 3) = C(3,3) × (0.5)³ × (0.5)⁰ = 1 × 0.125 = 0.125
-Total = 0.375 + 0
+Total = 0.375 + 0.125 = 0.5
+
+**A102:** P(2 aces without replacement):
+P(1st ace) = 4/52, P(2nd ace|1st ace) = 3/51
+P(2 aces) = (4/52) × (3/51) = 12/2652 = 1/221 ≈ 0.0045
+
+**A103:** Independent events: P(A∩B) = P(A)×P(B), occurrence of one doesn't affect the other (coin flips). Mutually exclusive events: P(A∩B) = 0, cannot occur simultaneously (rolling 1 and 6 on single die). Note: Independent events are never mutually exclusive unless one has probability 0.
+
+**A104:** Conditional probability P(A|B) = P(A∩B)/P(B)
+Given: P(A∩B) = 0.3, P(B) = 0.6
+P(A|B) = 0.3/0.6 = 0.5
+
+**A105:** Bayes' theorem: P(A|B) = P(B|A)×P(A)/P(B)
+ML application: Naive Bayes classifier uses Bayes' theorem to calculate P(class|features) = P(features|class)×P(class)/P(features)
+
+**A106:** Let D = disease, T = positive test
+Given: P(T|D) = 0.95, P(T|¬D) = 0.05, P(D) = 0.01
+P(T) = P(T|D)×P(D) + P(T|¬D)×P(¬D) = 0.95×0.01 + 0.05×0.99 = 0.0095 + 0.0495 = 0.059
+P(D|T) = P(T|D)×P(D)/P(T) = (0.95×0.01)/0.059 ≈ 0.161 or 16.1%
+
+**A107:** Permutation: Order matters, P(n,r) = n!/(n-r)!. Use for arrangements (seating order).
+Combination: Order doesn't matter, C(n,r) = n!/[r!(n-r)!]. Use for selections (choosing team members).
+
+**A108:** For independent X, Y: Cov(X,Y) = 0
+Var(X + Y) = Var(X) + Var(Y) + 2Cov(X,Y) = Var(X) + Var(Y) + 2(0) = Var(X) + Var(Y)
+
+**A109:** Total balls = 10, drawing 3 without replacement
+P(2 red, 1 blue) = [C(5,2) × C(3,1) × C(2,0)] / C(10,3)
+= (10 × 3 × 1) / 120 = 30/120 = 0.25
+
+**A110:** Birthday paradox: P(at least 2 share birthday) = 1 - P(all different)
+P(all different) = (365/365) × (364/365) × ... × (343/365) ≈ 0.493  
+P(at least 2 same) = 1 - 0.493 = 0.507 or about 50.7%
+
+### Probability Distributions (Answers 111-120)
+
+**A111:** PDF gives probability density at each point for continuous variables (area under curve = probability). CDF gives cumulative probability P(X ≤ x), always non-decreasing from 0 to 1. For discrete variables, PMF gives exact probabilities.
+
+**A112:** X ~ N(100, 25), so μ = 100, σ = 5
+P(90 < X < 110) = P(-2 < Z < 2) where Z = (X-100)/5
+Using standard normal table: P(-2 < Z < 2) ≈ 0.9545 or 95.45%
+
+**A113:** Binomial distribution models number of successes in n independent trials with success probability p. Parameters: n (trials), p (success probability). Assumptions: (1) Fixed number of trials, (2) Independent trials, (3) Constant probability, (4) Two outcomes only.
+
+**A114:** As n increases and p is moderate, binomial approaches normal distribution (Central Limit Theorem). Rule of thumb: np ≥ 5 and n(1-p) ≥ 5. Approximation: Binomial(n,p) ≈ Normal(np, np(1-p)).
+
+**A115:** Poisson models rare events in fixed time/space intervals. Examples: (1) Number of emails per hour, (2) Defects per manufactured item, (3) Customer arrivals per minute. Parameter λ = average rate.
+
+**A116:** Exponential models time between Poisson events. If events follow Poisson(λ), then time between events follows Exponential(λ). Exponential is continuous, Poisson is discrete. Both have memoryless property.
+
+**A117:** CLT states that sample means approach normal distribution as sample size increases, regardless of population distribution. Important because: (1) Enables inference with any distribution, (2) Justifies normal approximations, (3) Foundation for confidence intervals and hypothesis tests.
+
+**A118:** Use Poisson approximation: n = 1000, p = 0.02, λ = np = 20
+P(X = 25) = e^(-20) × 20^25 / 25! ≈ 0.0446 or 4.46%
+
+**A119:** 
+- Uniform: Constant probability over interval, rectangular shape, models complete uncertainty
+- Normal: Bell-shaped, symmetric, models many natural phenomena
+- Exponential: Decreasing curve, models time between events, has memoryless property
+
+**A120:** Law of Large Numbers: Sample average converges to population mean as n → ∞. In ML: Larger samples give better estimates of population parameters, reducing sampling error and improving model generalization.
+
+### Statistical Inference (Answers 121-130)
+
+**A121:** Population: Complete group of interest. Sample: Subset of population.
+Parameter: Numerical summary of population (μ, σ). Statistic: Numerical summary of sample (x̄, s).
+
+**A122:** Type I error (α): Rejecting true null hypothesis (false positive). Type II error (β): Accepting false null hypothesis (false negative). Consequences: Type I leads to unnecessary actions, Type II misses real effects. Power = 1 - β.
+
+**A123:** P-value: Probability of observing test statistic as extreme or more extreme, assuming null hypothesis is true. P-value of 0.03 means 3% chance of observing this result if null hypothesis were true. If α = 0.05, reject null hypothesis.
+
+**A124:** One-sample t-test:
+H₀: μ = 100, H₁: μ ≠ 100
+t = (x̄ - μ₀)/(s/√n) = (105 - 100)/(15/√25) = 5/3 = 1.667
+df = 24, critical value ≈ ±2.064
+Since |1.667| < 2.064, fail to reject H₀.
+
+**A125:** One-tailed test: Tests direction of difference (>, <), more powerful for detecting effect in specific direction. Two-tailed test: Tests any difference (≠), more conservative. Use one-tailed when theory predicts direction, two-tailed when testing for any difference.
+
+**A126:** Confidence interval: Range of plausible values for population parameter. 95% CI means if we repeated sampling many times, 95% of intervals would contain true parameter. It's about the procedure, not individual intervals.
+
+**A127:** Correlation: Statistical association between variables. Causation: One variable directly influences another. Correlation doesn't imply causation due to: (1) Confounding variables, (2) Reverse causation, (3) Spurious relationships. Example: Ice cream sales correlate with drowning deaths (confounded by temperature).
+
+**A128:** Pearson correlation: r = Σ[(xᵢ - x̄)(yᵢ - ȳ)] / √[Σ(xᵢ - x̄)²Σ(yᵢ - ȳ)²]
+X = [1,2,3,4,5], Y = [2,4,6,8,10]
+Perfect linear relationship, so r = 1.0
+
+**A129:** Chi-square test examines association between categorical variables or goodness of fit. Use when: (1) Both variables categorical, (2) Testing independence, (3) Goodness of fit testing. Assumptions: (1) Independent observations, (2) Expected frequencies ≥ 5.
+
+**A130:** ANOVA tests equality of means across multiple groups. Use instead of multiple t-tests to control Type I error rate. Compares between-group variance to within-group variance. F-statistic = MS_between/MS_within.
+
+## Section 10: Statistical Methods in ML (Answers 131-150)
+
+### Descriptive Statistics (Answers 131-135)
+
+**A131:** Data: [1,2,2,3,4,4,4,5,6,100]
+- Mean = (1+2+2+3+4+4+4+5+6+100)/10 = 13.1
+- Median = (4+4)/2 = 4 (middle values)
+- Mode = 4 (appears 3 times)
+- Standard deviation ≈ 29.8 (high due to outlier 100)
+
+**A132:** Sample std dev uses (n-1) denominator (Bessel's correction) to correct for bias when estimating population variance. Population std dev uses n denominator when you have entire population. Sample version gives unbiased estimate of population variance.
+
+**A133:** Q1 = 25th percentile, Q3 = 75th percentile, IQR = Q3 - Q1
+Outliers: Below Q1 - 1.5×IQR or above Q3 + 1.5×IQR
+Robust method unaffected by extreme values, commonly used in boxplots.
+
+**A134:** Skewness measures asymmetry: Positive = right tail longer, Negative = left tail longer. Kurtosis measures tail heaviness. Affects ML: (1) May need transformations, (2) Affects algorithm assumptions, (3) Outlier sensitivity, (4) Choose robust algorithms for skewed data.
+
+**A135:** Transform skewed distributions:
+1. Log transformation: log(x) for right-skewed
+2. Square root: √x for mild right skew
+3. Box-Cox: (x^λ - 1)/λ for optimal λ
+4. Yeo-Johnson: Handles negative values
+5. Quantile transformation: Maps to uniform/normal distribution
+
+### Hypothesis Testing in ML (Answers 136-143)
+
+**A136:** Compare ML models using paired t-test or McNemar's test:
+- Paired t-test: For continuous metrics (RMSE, accuracy) on same test set
+- McNemar's test: For comparing classification errors on same samples
+- Cross-validated paired t-test: Accounts for multiple CV folds
+- Corrected resampled t-test: Adjusts for correlation in CV results
+
+**A137:** A/B testing compares two versions (control vs treatment). Steps:
+1. Define hypothesis and success metric
+2. Calculate required sample size (power analysis)  
+3. Randomize users to groups
+4. Run test for predetermined duration
+5. Statistical test: Two-sample z-test for proportions
+Statistical significance: p-value < α (typically 0.05)
+
+**A138:** Two-proportion z-test:
+p₁ = 0.85, p₂ = 0.82, n₁ = n₂ = 1000
+Pooled proportion: p̂ = (850 + 820)/2000 = 0.835
+SE = √[p̂(1-p̂)(1/n₁ + 1/n₂)] = √[0.835×0.165×0.002] ≈ 0.0166
+z = (0.85 - 0.82)/0.0166 ≈ 1.81
+p-value ≈ 0.07 > 0.05, not significantly different
+
+**A139:** Multiple testing problem: Increased Type I error rate when performing many tests. If α = 0.05 for each test, probability of at least one false positive increases with number of tests. Bonferroni correction: Use α/k where k = number of tests, controls family-wise error rate.
+
+**A140:** Paired t-test: Same subjects tested twice (before/after treatment), tests mean difference. Unpaired t-test: Different subjects in each group, tests difference in group means. In ML: Use paired for same dataset with different models, unpaired for different datasets.
+
+**A141:** Statistical power: Probability of correctly rejecting false null hypothesis (1 - β). Larger sample size increases power by reducing standard error, making it easier to detect true effects. Power analysis determines required sample size for desired effect detection.
+
+**A142:** Test normality of residuals:
+1. Shapiro-Wilk test: Tests if sample comes from normal distribution
+2. Kolmogorov-Smirnov test: Compares to normal distribution
+3. Anderson-Darling test: More sensitive to tail differences
+Visual methods: Q-Q plots, histograms of residuals
+
+**A143:** Heteroscedasticity: Non-constant variance of residuals. Tests:
+1. Breusch-Pagan test: Regress squared residuals on predictors
+2. White test: More general, includes cross-products
+3. Goldfeld-Quandt test: Compare variances of subgroups
+Implications: Inefficient estimates, invalid confidence intervals. Solutions: Robust standard errors, weighted least squares.
+
+### Bayesian Statistics (Answers 144-147)
+
+**A144:** Frequentist: Probability as long-run frequency, parameters are fixed but unknown, uses p-values and confidence intervals. Bayesian: Probability as degree of belief, parameters are random variables with distributions, updates beliefs with data using Bayes' theorem.
+
+**A145:** 
+- Prior: Initial belief about parameter before seeing data
+- Likelihood: Probability of data given parameter value  
+- Posterior: Updated belief after seeing data
+Bayes' theorem: Posterior ∝ Likelihood × Prior
+
+**A146:** Bayesian ML applications:
+1. Bayesian neural networks: Uncertainty quantification
+2. Gaussian processes: Probabilistic modeling
+3. Bayesian optimization: Hyperparameter tuning
+4. Online learning: Update beliefs with new data
+5. A/B testing: Bayesian hypothesis testing
+
+**A147:** Conjugate prior: When prior and posterior have same distributional form. Beta-binomial example: If prior is Beta(α,β) and likelihood is Binomial, then posterior is Beta(α+successes, β+failures). Simplifies computation, provides analytical solutions.
+
+### Experimental Design (Answers 148-150)
+
+**A148:** Randomization ensures each unit has equal chance of receiving any treatment. Importance: (1) Eliminates selection bias, (2) Balances known/unknown confounders, (3) Validates statistical inference, (4) Creates comparable groups.
+
+**A149:** Confounding variables are associated with both treatment and outcome, creating spurious associations. Control methods: (1) Randomization, (2) Matching, (3) Stratification, (4) Regression adjustment, (5) Instrumental variables.
+
+**A150:** Observational studies: Researcher observes without manipulating variables, can show association but not causation. Controlled experiments: Researcher manipulates variables, can establish causation. In ML: Most studies are observational, randomized experiments needed for causal claims.
+
+## Section 11: Practical Statistics Problems (Answers 151-170)
+
+### Data Analysis Scenarios (Answers 151-160)
+
+**A151:** Test day-of-week effect using ANOVA or chi-square test:
+1. Collect model performance by day of week
+2. ANOVA: Test if mean performance differs across days
+3. Chi-square: Test if error distribution differs by day
+4. Post-hoc tests to identify which days differ
+5. Consider temporal patterns and business cycles
+
+**A152:** Two-proportion z-test:
+p₁ = 0.052, p₂ = 0.058, n₁ = n₂ = 10000
+Pooled p̂ = (520 + 580)/20000 = 0.055
+SE = √[0.055×0.945×(1/10000 + 1/10000)] ≈ 0.00323
+z = (0.058 - 0.052)/0.00323 ≈ 1.86
+p-value ≈ 0.063 > 0.05, marginally not significant
+
+**A153:** High correlations indicate multicollinearity concerns:
+1. Check VIF (Variance Inflation Factor) > 10
+2. Condition number of correlation matrix > 30
+3. May cause unstable coefficients, poor interpretability
+4. Solutions: Remove correlated features, use regularization, PCA
+
+**A154:** Test normality across categories:
+1. Shapiro-Wilk test within each category
+2. Kolmogorov-Smirnov test for each group
+3. Visual inspection: Q-Q plots by category
+4. Levene's test for equal variances across groups
+5. Consider transformations if non-normal
+
+**A155:** Compare multiple campaign CTRs:
+1. Chi-square test of independence (campaigns vs clicks)
+2. One-way ANOVA on CTR values
+3. Post-hoc tests (Tukey HSD) for pairwise comparisons
+4. Adjust for multiple comparisons
+5. Effect size measures (Cohen's w, eta-squared)
+
+**A156:** Missing data analysis:
+1. Missing Completely at Random (MCAR) test
+2. Pattern analysis: Are missingness patterns informative?
+3. Correlation between missingness and other variables
+4. Domain knowledge about missing mechanism
+5. Cost-benefit analysis of imputation vs deletion
+
+**A157:** Residual pattern analysis:
+1. Plot residuals vs fitted values
+2. Look for heteroscedasticity, non-linearity
+3. Breusch-Pagan test for heteroscedasticity
+4. Durbin-Watson test for autocorrelation
+5. Consider polynomial terms, interactions, transformations
+
+**A158:** Test homoscedasticity (constant variance):
+1. Breusch-Pagan test: Regress |residuals| on predictors
+2. White test: More general heteroscedasticity test
+3. Goldfeld-Quandt test: Split data, compare variances
+4. Visual: Scale-location plot of residuals
+5. Solutions: Robust standard errors, weighted regression
+
+**A159:** Test distribution differences:
+1. Two-sample Kolmogorov-Smirnov test
+2. Anderson-Darling test for distribution comparison
+3. Population Stability Index (PSI) for feature drift
+4. Chi-square test for categorical distributions
+5. Quantile-quantile (Q-Q) plots for visual comparison
+
+**A160:** Test feature importance:
+1. Likelihood ratio test: Compare models with/without feature
+2. Permutation importance: Shuffle feature, measure performance drop
+3. ANOVA F-test for regression coefficients
+4. Cross-validated performance comparison
+5. Information criteria (AIC, BIC) for model comparison
+
+### Real-world Applications (Answers 161-170)
+
+**A161:** One-sample proportion test:
+H₀: p = 0.70, H₁: p ≠ 0.70
+Sample proportion: p̂ = 62/100 = 0.62
+SE = √[p₀(1-p₀)/n] = √[0.70×0.30/100] = 0.0458
+z = (0.62 - 0.70)/0.0458 = -1.75
+p-value ≈ 0.08 > 0.05, fail to reject H₀ at α = 0.05
+
+**A162:** A/B test design for cart abandonment:
+1. Hypothesis: New checkout reduces abandonment rate
+2. Primary metric: Cart abandonment rate
+3. Sample size calculation based on current rate, desired effect size
+4. Randomization: Users randomly assigned to old/new checkout
+5. Duration: Run until reaching statistical significance and practical significance
+6. Analysis: Two-proportion z-test
+
+**A163:** Highly skewed CLV analysis:
+1. Log transformation: log(CLV + 1)
+2. Robust statistics: Median, IQR instead of mean, SD
+3. Bootstrap confidence intervals
+4. Quantile regression instead of linear regression
+5. Consider mixture models or survival analysis
+6. Outlier treatment before analysis
+
+**A164:** Test regional loan default differences:
+1. Chi-square test of independence (region vs default status)
+2. Logistic regression with region as predictor
+3. ANOVA on default rates by region
+4. Post-hoc tests for pairwise regional comparisons
+5. Control for confounders (income, credit score, etc.)
+6. Effect size measures
+
+**A165:** Test regression assumptions for house prices:
+1. Linearity: Residuals vs fitted values plot
+2. Independence: Durbin-Watson test, check spatial correlation
+3. Homoscedasticity: Breusch-Pagan test
+4. Normality: Shapiro-Wilk test on residuals
+5. No multicollinearity: VIF values < 10
+6. Solutions: Transformations, robust regression, GAMs
+
+**A166:** Quantify country viewing differences:
+1. ANOVA: Test if mean viewing time differs by country
+2. Chi-square: Test if viewing category preferences differ
+3. Kruskal-Wallis: Non-parametric alternative to ANOVA
+4. Effect sizes: Eta-squared, Cohen's d for pairwise comparisons
+5. Multiple comparison corrections
+6. Cultural and demographic controls
+
+**A167:** Statistical modeling of seasonality:
+1. Decompose time series: Trend, seasonal, residual components
+2. Seasonal dummy variables in regression
+3. Fourier terms for periodic patterns
+4. SARIMA models for seasonal ARIMA
+5. Tests: Seasonal unit root tests, periodogram analysis
+6. Cross-validation with time-aware splits
+
+**A168:** Social media engagement experiment:
+1. Randomized controlled trial: Users assigned to old/new algorithm
+2. Metrics: Engagement rate, session duration, user retention
+3. Stratified randomization by user characteristics
+4. Statistical tests: t-tests for continuous metrics, chi-square for categorical
+5. Multiple testing corrections for multiple metrics
+6. Long-term vs short-term effects analysis
+
+**A169:** Likert scale analysis considerations:
+1. Treat as ordinal data, not continuous
+2. Use non-parametric tests: Mann-Whitney U, Kruskal-Wallis
+3. Chi-square for independence testing
+4. Median and IQR for central tendency
+5. Ordinal logistic regression for modeling
+6. Consider underlying continuous construct
+
+**A170:** One-sample t-test for delivery time:
+H₀: μ = 2, H₁: μ ≠ 2
+Sample: n = 50, x̄ = 2.3, s = 0.8
+t = (2.3 - 2)/(0.8/√50) = 0.3/0.113 ≈ 2.65
+df = 49, critical value ≈ ±2.01
+Since |2.65| > 2.01, reject H₀. Delivery time significantly different from 2 days.
+
+---
+
+## Quick Reference Summary
+
+### Key Statistical Concepts for ML:
+1. **Hypothesis Testing**: Framework for making data-driven decisions
+2. **Probability Distributions**: Foundation for understanding data and algorithms
+3. **Bayesian Thinking**: Updating beliefs with evidence
+4. **Experimental Design**: Proper setup for causal inference
+5. **Assumption Testing**: Validating model prerequisites
+
+### Common Statistical Tests in ML:
+- **t-tests**: Compare means, model performance
+- **Chi-square**: Categorical relationships, goodness of fit
+- **ANOVA**: Compare multiple groups
+- **Correlation tests**: Feature relationships
+- **Normality tests**: Check assumptions
+
+### Practical Applications:
+- **A/B Testing**: Compare model versions
+- **Feature Selection**: Statistical significance of predictors
+- **Model Validation**: Performance testing and comparison
+- **Data Quality**: Distribution testing and outlier detection
+- **Business Metrics**: Statistical significance of improvements
+
+Remember: Statistical significance ≠ Practical significance. Always consider effect size and business impact alongside p-values!
