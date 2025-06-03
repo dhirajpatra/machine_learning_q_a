@@ -1,5 +1,5 @@
-# machine_learning_qa
-Preapring set for machine learning engineer
+# Machine Learning Engineer Q&A
+Preparation set for machine learning engineer interview
 
 # 100 Machine Learning Questions for HackerEarth Test Preparation
 
