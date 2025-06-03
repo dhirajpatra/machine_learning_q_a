@@ -1,7 +1,7 @@
 # Machine Learning Engineer Q&A
 Preparation set for machine learning engineer interview
 
-# 100 Machine Learning Questions for HackerEarth Test Preparation
+# 100 Machine Learning Questions for Online Test Preparation
 
 ## Section 1: Machine Learning Fundamentals (20 Questions)
 
